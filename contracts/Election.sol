@@ -10,6 +10,7 @@ contract Election{
     }
 
     mapping(uint => Candidate) public candidates;
+    mapping(address => bool) public voters;
 
     uint public candidatesCount;
 
@@ -22,6 +23,12 @@ contract Election{
     function addCandidate(string _name) private{
         candidatesCount++;
         candidates[candidatesCount] = Candidate(candidatesCount,_name,0);
+    }
+
+    function vote(uint _candidateId) public {
+        require(voters[msg.sender]==false);
+        voters[msg.sender] = true;
+        candidates[_candidateId].voteCount ++;
     }
 
 }
